@@ -1,15 +1,21 @@
 <script setup lang="ts">
 
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '@/lib/supabaseClient'
+import { reactive, ref } from 'vue'
 
-(async () => {
-  // ..
-  const { data, error } = await supabase.from('projects').select()
 
-  if (error) console.log(error)
+const projects = ref()
 
-  return data
-})()
+  ; (async () => {
+    // ..
+    const { data, error } = await supabase.from('projects').select()
+
+    if (error) console.log(error)
+
+    projects.value = data
+
+    console.log('projects:', projects.value)
+  })()
 
 </script>
 
@@ -19,5 +25,6 @@ import { supabase } from '@/lib/supabaseClient';
   <div>
     <h1>Projects Page</h1>
     <RouterLink to="/">Go to home</RouterLink>
+    {{ projects }}
   </div>
 </template>
