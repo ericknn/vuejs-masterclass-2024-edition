@@ -9,9 +9,9 @@ const task = ref<Task | null>(null)
 watch(() => task.value?.name, () => { usePageStore().pageData.title = `Task: ${task.value?.name || ''}` })
 
 const getTasks = async () => {
-  const { data, error } = await taskQuery(route.params.id)
+  const { data, error, status } = await taskQuery(route.params.id)
 
-  if (error) console.log(error)
+  if (error) useErrorStore().setError({ error, customCode: status })
 
   task.value = data
 }
