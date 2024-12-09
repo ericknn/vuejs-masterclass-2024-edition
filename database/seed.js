@@ -5,6 +5,8 @@ import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.SERVICE_ROLE_KEY)
 
+const testingUserEmail = process.env.TESTING_USER_EMAIL
+
 const logErrorAndExit = (tableName, error) => {
   console.error(
     `An error occurred in table '${tableName}' with code ${error.code}: ${error.message}`,

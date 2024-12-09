@@ -1,6 +1,8 @@
 <script setup lang="ts">
 
 
+
+
 const links = [
   {
     title: 'Dashboard',
@@ -32,10 +34,20 @@ const accountLinks = [
   },
   {
     title: 'Sing Out',
-    to: '/singout',
     icon: 'lucide:log-out'
   }
 ]
+
+const router = useRouter()
+
+const executeAction = async (linkTitle: string) => {
+  if (linkTitle === 'Sing Out') {
+    const { logout } = await import('@/utils/supaAuth');
+    const isLoggedOut = await logout()
+
+    if (isLoggedOut) router.push("/login")
+  }
+}
 </script>
 <template>
   <aside class="flex flex-col h-screen gap-2 border-r fixed bg-muted/40 lg:w-52 w-16 transition-[width]">
@@ -55,7 +67,7 @@ const accountLinks = [
       </div>
 
       <div class="border-y text-center bg-background py-3">
-        <SidebarLinks :links="accountLinks" />
+        <SidebarLinks :links="accountLinks" @actionClicked="executeAction" />
       </div>
     </nav>
   </aside>
