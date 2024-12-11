@@ -1,10 +1,6 @@
 <script setup lang="ts" generic="TData, TValue">
 import type { ColumnDef } from '@tanstack/vue-table'
-import {
-  FlexRender,
-  getCoreRowModel,
-  useVueTable,
-} from '@tanstack/vue-table'
+import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
 
 const props = defineProps<{
   columns: ColumnDef<TData, TValue>[]
@@ -12,9 +8,13 @@ const props = defineProps<{
 }>()
 
 const table = useVueTable({
-  get data() { return props.data },
-  get columns() { return props.columns },
-  getCoreRowModel: getCoreRowModel(),
+  get data() {
+    return props.data
+  },
+  get columns() {
+    return props.columns
+  },
+  getCoreRowModel: getCoreRowModel()
 })
 </script>
 
@@ -40,9 +40,7 @@ const table = useVueTable({
         </template>
         <template v-else>
           <TableRow>
-            <TableCell :colspan="columns.length" class="h-24 text-center">
-              No results.
-            </TableCell>
+            <TableCell :colspan="columns.length" class="h-24 text-center"> No results. </TableCell>
           </TableRow>
         </template>
       </TableBody>
@@ -52,10 +50,10 @@ const table = useVueTable({
 
 <style scoped>
 td {
-  @apply p-0
+  @apply p-0;
 }
 
 td>* {
-  @apply p-4
+  @apply p-4;
 }
 </style>
