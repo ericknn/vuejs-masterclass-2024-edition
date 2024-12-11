@@ -2,7 +2,7 @@
 
 import { taskWithProjectsQuery } from '@/utils/supaQueries';
 import type { TasksWithProjects } from '@/utils/supaQueries'
-import { columns } from '@/utils/tableColums/tasksColumns';
+import { columns } from '@/utils/tableColumns/tasksColumns';
 
 usePageStore().pageData.title = 'My Tasks'
 
