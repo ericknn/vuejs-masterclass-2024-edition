@@ -1,7 +1,5 @@
 <script setup lang="ts">
-
-
-
+const { profile } = storeToRefs(useAuthStore())
 
 const links = [
   {
@@ -15,40 +13,40 @@ const links = [
     icon: 'lucide:building-2'
   },
   {
-    title: 'Tasks',
+    title: 'My Tasks',
     to: '/tasks',
     icon: 'lucide:badge-check'
   }
 ]
 
-const accountLinks = [
-  {
-    title: 'Profile',
-    to: '/profile',
-    icon: 'lucide:user'
-  },
-  {
-    title: 'Settings',
-    to: '/settings',
-    icon: 'lucide:settings'
-  },
-  {
-    title: 'Sing Out',
-    icon: 'lucide:log-out'
-  }
-]
+const accountLinks = computed(() => {
+  return [
+    {
+      title: 'Profile',
+      to: `/users/${profile.value?.username}`,
+      icon: 'lucide:user'
+    },
+    {
+      title: 'Sign Out',
+      icon: 'lucide:log-out'
+    }
+  ]
+})
 
 const router = useRouter()
 
 const executeAction = async (linkTitle: string) => {
-  if (linkTitle === 'Sing Out') {
-    const { logout } = await import('@/utils/supaAuth');
+  if (linkTitle === 'Sign Out') {
+    const { logout } = await import('@/utils/supaAuth')
     const isLoggedOut = await logout()
 
-    if (isLoggedOut) router.push("/login")
+    if (isLoggedOut) router.push('/login')
   }
 }
+
+defineEmits(['taskClicked'])
 </script>
+
 <template>
   <aside class="flex flex-col h-screen gap-2 border-r fixed bg-muted/40 lg:w-52 w-16 transition-[width]">
     <div class="flex h-16 items-center border-b px-2 lg:px-4 shrink-0 gap-1 justify-between">
@@ -56,9 +54,19 @@ const executeAction = async (linkTitle: string) => {
         <iconify-icon icon="lucide:menu"></iconify-icon>
       </Button>
 
-      <Button variant="outline" size="icon" class="w-8 h-8">
-        <iconify-icon icon="lucide:plus"></iconify-icon>
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button variant="outline" size="icon" class="w-8 h-8">
+            <iconify-icon icon="lucide:plus"></iconify-icon>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem @click="$emit('taskClicked')">
+            Task
+          </DropdownMenuItem>
+          <DropdownMenuItem> Project </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
 
     <nav class="flex flex-col gap-2 justify-between h-full relative">
