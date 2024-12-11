@@ -5,19 +5,21 @@ const projectsLoader = useProjectsStore()
 const { project } = storeToRefs(projectsLoader)
 const { getProject } = projectsLoader
 
-
-
-watch(() => project.value?.name, () => { usePageStore().pageData.title = `Project: ${project.value?.name || ''}` })
+watch(
+  () => project.value?.name,
+  () => {
+    usePageStore().pageData.title = `Project: ${project.value?.name || ''}`
+  }
+)
 
 await getProject(slug)
-
 </script>
 
 <template>
   <Table v-if="project">
     <TableRow>
       <TableHead> Name </TableHead>
-      <TableCell> {{ project?.name }} </TableCell>
+      <TableCell> {{ project.name }} </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
